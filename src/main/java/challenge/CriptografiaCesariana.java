@@ -10,35 +10,25 @@ public class CriptografiaCesariana implements Criptografia {
     @Override
     public String criptografar(String texto) {
 
-        return realizarCriptografia(texto);
+        return realizarConversao(texto, 3);
     }
 
     @Override
     public String descriptografar(String texto) {
 
-        return realizarDescriptografia(texto);
+        return realizarConversao(texto, -3);
     }
 
-    private String realizarDescriptografia(String texto) {
+    private String realizarConversao(String texto, int codificador) {
         validarTexto(texto);
         char[] arrayTexto = texto.toCharArray();
 
         for (char value : arrayTexto) listaTexto.add(Character.toString(value));
         return listaTexto.stream()
-                .map(c -> modificarCaracter(0, c, -3))
+                .map(c -> modificarCaracter(0, c, codificador))
                 .map(String::valueOf)
-                .collect(Collectors.joining()).toLowerCase();
-    }
-
-    private String realizarCriptografia(String texto) {
-        validarTexto(texto);
-        char[] arrayTexto = texto.toCharArray();
-
-        for (char value : arrayTexto) listaTexto.add(Character.toString(value));
-        return listaTexto.stream()
-                .map(c -> modificarCaracter(0, c, 3))
-                .map(String::valueOf)
-                .collect(Collectors.joining()).toLowerCase();
+                .collect(Collectors.joining())
+                .toLowerCase();
     }
 
     private char modificarCaracter(int index, String lista, int codificador) {
